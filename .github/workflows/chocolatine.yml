@@ -22,7 +22,7 @@ jobs:
 
       - name: Run coding-style
         run: | 
-          find . -type f \( -name "*.c" -o -name "*.h" \) ! -path "./units_tests/*" > files_to_check.txt
+          find . -type f \( -name "*.c" -o -name "*.h" \) ! -path "./tests/*" > files_to_check.txt
           xargs < files_to_check.txt
           check.sh xargs /tmp
 
