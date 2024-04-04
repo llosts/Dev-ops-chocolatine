@@ -5,7 +5,8 @@
 ## Makefile
 ##
 
-SRC_MAIN		=	src/main.c
+SRC_MAIN		=	src/main.c								\
+					src/display_help.c
 
 SRC_UTILS		= 	src/errors.c
 
