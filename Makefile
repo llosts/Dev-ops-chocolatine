@@ -5,57 +5,57 @@
 ## Makefile
 ##
 
-SRC_MAIN		=	src/main.c								\
-					src/display_help.c
+SRC_MAIN	=	src/main.c								\
+				src/display_help.c
 
-SRC_UTILS		= 	src/errors.c
+SRC_UTILS	= 	src/errors.c
 
-SRC_TEST		=	units_tests/test.c
+SRC_TEST	=	tests/test.c
 
-OBJ 			=	$(SRC_MAIN:.c=.o)						\
-					$(SRC_UTILS:.c=.o)
+OBJ 		=	$(SRC_MAIN:.c=.o)						\
+				$(SRC_UTILS:.c=.o)
 
-OBJ_TEST		=	$(SRC_UTILS:.c=.o)						\
-					$(SRC_TEST:.c=.o)
+OBJ_TEST	=	$(SRC_UTILS:.c=.o)						\
+				$(SRC_TEST:.c=.o)
 
-CFLAGS			=	-W -Wall -Wextra -iquote include
+CFLAGS		=	-W -Wall -Wextra -iquote include
 
-FLAGS_DEBUG 	= 	-g3
+FLAGS_DEBUG = 	-g3
 
-FLAGS_TEST 		=	-lcriterion
+FLAGS_TEST 	=	-lcriterion
 
-NAME			=	chocolatine
+NAME		=	chocolatine
 
-NAME_TEST		= 	unit_tests
+NAME_TEST	= 	unit_tests
 
-$(NAME):			$(OBJ)
-					gcc -o $(NAME) $(OBJ) $(CFLAGS)
+$(NAME):		$(OBJ)
+			$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
 
-all:				$(NAME)
+all:			$(NAME)
 
-debug: 				CFLAGS += $(FLAGS_DEBUG)
+debug: 			CFLAGS += $(FLAGS_DEBUG)
 
-debug:				$(OBJ)
-					gcc -o $(NAME) $(OBJ) $(CFLAGS)
+debug:			$(OBJ)
+			$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
 
 clean:
-					rm -rf $(OBJ)
+			$(RM) -rf $(OBJ)
 
 clean_test:
-					find . -name "*.gcda" -delete -or -name "*.gcno" -delete
-					rm -rf $(NAME_TEST)
+			find . -name "*.gcda" -delete -or -name "*.gcno" -delete
+			$(RM) -rf $(NAME_TEST)
 
-fclean:				clean clean_test
-					rm -rf $(NAME)
-					rm -rf $(OBJ)
-					rm -rf $(OBJ_TEST)
+fclean:			clean clean_test
+			$(RM) -rf $(NAME)
+			$(RM) -rf $(OBJ)
+			$(RM) -rf $(OBJ_TEST)
 
-tests_run:			CFLAGS += --coverage
+tests_run:		CFLAGS += --coverage
 
-tests_run: 			$(OBJ_TEST)
-					gcc -o $(NAME_TEST) $(OBJ_TEST) $(CFLAGS) $(FLAGS_TEST)
-					./unit_tests --verbose
+tests_run: 		$(OBJ_TEST)
+			$(CC) -o $(NAME_TEST) $(OBJ_TEST) $(CFLAGS) $(FLAGS_TEST)
+			./$(NAME_TEST) --verbose
 
-re:					fclean all
+re:				fclean all
 
-.PHONY: 			all debug clean clean_test fclean tests_run re
+.PHONY: 		all debug clean clean_test fclean tests_run re
