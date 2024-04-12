@@ -1,2 +1,0 @@
-dlskq dkj
-dsl
